@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MVC-MVP-MVVM</string>
+    <string name="this_is_mvc_activity">This is MVC Activity</string>
+</resources>
