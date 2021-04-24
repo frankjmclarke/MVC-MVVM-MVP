@@ -4,6 +4,7 @@ import com.fclarke.mvc_mvp_mvvm.model.CountriesServiceModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
+import com.fclarke.mvc_mvp_mvvm.model.CountryInterface
 
 class Controller (vi:MVCActivityView){
     private var view: MVCActivityView? = null

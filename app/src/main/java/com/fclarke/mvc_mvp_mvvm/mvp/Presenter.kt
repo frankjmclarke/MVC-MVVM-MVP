@@ -1,7 +1,7 @@
 package com.fclarke.mvc_mvp_mvvm.mvp
 
 import com.fclarke.mvc_mvp_mvvm.model.CountriesServiceModel
-import com.fclarke.mvc_mvp_mvvm.mvc.CountryInterface
+import com.fclarke.mvc_mvp_mvvm.model.CountryInterface
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers

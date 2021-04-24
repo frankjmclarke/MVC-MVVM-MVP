@@ -1,6 +1,5 @@
 package com.fclarke.mvc_mvp_mvvm.model
 
-import com.fclarke.mvc_mvp_mvvm.mvc.CountryInterface
 import io.reactivex.Single
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
