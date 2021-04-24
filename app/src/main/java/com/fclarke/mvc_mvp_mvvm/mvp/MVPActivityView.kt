@@ -1,4 +1,4 @@
-package com.fclarke.mvc_mvp_mvvm.mvc
+package com.fclarke.mvc_mvp_mvvm.mvp
 
 import android.content.Context
 import android.content.Intent
@@ -11,20 +11,20 @@ import com.fclarke.mvc_mvp_mvvm.R
 import java.util.*
 
 
-class MVCActivityView : AppCompatActivity() {
+class MVPActivityView : AppCompatActivity() , Presenter.View{
     private val listValues = mutableListOf<String?>()
     private var adapter: ArrayAdapter<String>? = null
     private var list: ListView? = null
-    private var controller: Controller? = null
+    private var presenter: Presenter? = null
     private var retryButton: Button? = null
     private var progress: ProgressBar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_mvc)
+        setContentView(R.layout.activity_mvp)
         title = "MVC Activity"
 
-        controller = Controller(this)
+        presenter = Presenter(this)
 
         list = findViewById(R.id.list)
         retryButton = findViewById(R.id.retryButton)
@@ -34,7 +34,7 @@ class MVCActivityView : AppCompatActivity() {
         list?.setAdapter(adapter)
         list?.setOnItemClickListener(OnItemClickListener { parent, view, position, id ->
             Toast.makeText(
-                this@MVCActivityView,
+                this@MVPActivityView,
                 "You clicked " + listValues[position],
                 Toast.LENGTH_SHORT
             ).show()
@@ -56,7 +56,7 @@ class MVCActivityView : AppCompatActivity() {
 
     }
 
-    fun setValues(values: MutableList<String?>) {
+    override fun setValues(values: MutableList<String?>) {
         listValues.clear()
         if (values != null)
             listValues.addAll(values.toCollection(mutableListOf()))
@@ -67,13 +67,13 @@ class MVCActivityView : AppCompatActivity() {
     }
 
     fun onRetry(view: View?) {
-        controller?.onRefresh()
+        presenter?.onRefresh()
         list!!.visibility = View.GONE
         retryButton!!.visibility = View.GONE
         progress!!.visibility = View.VISIBLE
     }
 
-    fun onError() {
+    override fun onError() {
         Toast.makeText(this, "Unable to get country names. Please retry later", Toast.LENGTH_SHORT)
             .show()
         progress!!.visibility = View.GONE
@@ -82,6 +82,6 @@ class MVCActivityView : AppCompatActivity() {
     }
 
     fun getIntent(context: Context?): Intent? {
-        return Intent(context, MVCActivityView::class.java)
+        return Intent(context, MVPActivityView::class.java)
     }
 }

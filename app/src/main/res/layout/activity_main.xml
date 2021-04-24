@@ -8,17 +8,38 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:text="This is first Activity"
+        android:text="@string/architectures"
         android:textSize="25sp"
-        android:padding="20sp"
+        android:padding="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/btnMVC"
-        android:text="MVC"
+        android:text="@string/mvc"
         android:textColor="#FFF"
-        android:padding="20sp"
+        android:padding="20dp"
+        android:layout_margin="5dp"
+        android:background="#397bb2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btnMVP"
+        android:text="@string/mvp"
+        android:textColor="#FFF"
+        android:padding="20dp"
+        android:layout_margin="5dp"
+        android:background="#397bb2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btnMVVP"
+        android:text="@string/mvvm"
+        android:textColor="#FFF"
+        android:padding="20dp"
+        android:layout_margin="5dp"
         android:background="#397bb2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

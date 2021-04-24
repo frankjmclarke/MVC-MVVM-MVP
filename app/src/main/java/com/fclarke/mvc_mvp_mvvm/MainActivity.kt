@@ -4,10 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.fclarke.mvc_mvp_mvvm.mvc.CountryInterface
 import com.fclarke.mvc_mvp_mvvm.mvc.MVCActivityView
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import com.fclarke.mvc_mvp_mvvm.mvp.MVPActivityView
+import com.fclarke.mvc_mvp_mvvm.mvvm.MVVMActivityView
 
 
 data class Language(val name: String)
@@ -21,9 +20,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val btnMVC: Button = findViewById(R.id.btnMVC)
+        val btnMVP: Button = findViewById(R.id.btnMVP)
+        val btnMVVM: Button = findViewById(R.id.btnMVVP)
+
 
         btnMVC.setOnClickListener {
             val intent = Intent(this, MVCActivityView::class.java)
+            startActivity(intent)
+        }
+        btnMVP.setOnClickListener {
+            val intent = Intent(this, MVPActivityView::class.java)
+            startActivity(intent)
+        }
+        btnMVVM.setOnClickListener {
+            val intent = Intent(this, MVVMActivityView::class.java)
             startActivity(intent)
         }
 

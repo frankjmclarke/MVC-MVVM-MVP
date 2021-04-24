@@ -18,6 +18,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".mvc.MVCActivityView" />
+        <activity android:name=".mvp.MVPActivityView" />
+        <activity android:name=".mvvm.MVVMActivityView" />
     </application>
 
 </manifest>

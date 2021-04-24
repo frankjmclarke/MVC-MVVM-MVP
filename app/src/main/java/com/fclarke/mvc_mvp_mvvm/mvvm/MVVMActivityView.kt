@@ -1,4 +1,4 @@
-package com.fclarke.mvc_mvp_mvvm.mvc
+package com.fclarke.mvc_mvp_mvvm.mvvm
 
 import android.content.Context
 import android.content.Intent
@@ -7,24 +7,26 @@ import android.view.View
 import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProviders
 import com.fclarke.mvc_mvp_mvvm.R
 import java.util.*
 
 
-class MVCActivityView : AppCompatActivity() {
+class MVVMActivityView : AppCompatActivity() {
+
     private val listValues = mutableListOf<String?>()
     private var adapter: ArrayAdapter<String>? = null
     private var list: ListView? = null
-    private var controller: Controller? = null
+    private var viewModel: CountriesViewModel? = null
     private var retryButton: Button? = null
     private var progress: ProgressBar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_mvc)
+        setContentView(R.layout.activity_mvp)
         title = "MVC Activity"
 
-        controller = Controller(this)
+        viewModel = ViewModelProviders.of(this).get(CountriesViewModel::class.java)
 
         list = findViewById(R.id.list)
         retryButton = findViewById(R.id.retryButton)
@@ -34,54 +36,47 @@ class MVCActivityView : AppCompatActivity() {
         list?.setAdapter(adapter)
         list?.setOnItemClickListener(OnItemClickListener { parent, view, position, id ->
             Toast.makeText(
-                this@MVCActivityView,
+                this@MVVMActivityView,
                 "You clicked " + listValues[position],
                 Toast.LENGTH_SHORT
             ).show()
         })
-        val vals = mutableListOf<String?>()
-        vals.add("UK")
-        vals.add("USA")
-        vals.add("Canada")
-        vals.add("Uganda")
-        vals.add("Nigeria")
-        vals.add("Ireland")
-        vals.add("UK")
-        vals.add("USA")
-        vals.add("Canada")
-        vals.add("Uganda")
-        vals.add("Nigeria")
-        vals.add("Ireland")
-        setValues(vals)
 
+        observeViewModel()
     }
 
-    fun setValues(values: MutableList<String?>) {
-        listValues.clear()
-        if (values != null)
-            listValues.addAll(values.toCollection(mutableListOf()))
-        retryButton!!.visibility = View.GONE
-        progress!!.visibility = View.GONE
-        list!!.visibility = View.VISIBLE
-        adapter!!.notifyDataSetChanged()
+    private fun observeViewModel() {
+        viewModel?.getCountries()?.observe(this) { countries ->
+            if (countries != null) {
+                listValues.clear()
+                listValues.addAll(countries)
+                list!!.visibility = View.VISIBLE
+                adapter!!.notifyDataSetChanged()
+            } else {
+                list!!.visibility = View.GONE
+            }
+        }
+        viewModel?.getCountryError()?.observe(this) { error ->
+            progress!!.visibility = View.GONE
+            if (error) {
+                Toast.makeText(this, "Error", Toast.LENGTH_SHORT)
+                    .show()
+                retryButton!!.visibility = View.VISIBLE
+            } else {
+                retryButton!!.visibility = View.GONE
+            }
+        }
     }
 
     fun onRetry(view: View?) {
-        controller?.onRefresh()
+        viewModel?.onRefresh()
         list!!.visibility = View.GONE
         retryButton!!.visibility = View.GONE
         progress!!.visibility = View.VISIBLE
     }
 
-    fun onError() {
-        Toast.makeText(this, "Unable to get country names. Please retry later", Toast.LENGTH_SHORT)
-            .show()
-        progress!!.visibility = View.GONE
-        list!!.visibility = View.GONE
-        retryButton!!.visibility = View.VISIBLE
-    }
 
     fun getIntent(context: Context?): Intent? {
-        return Intent(context, MVCActivityView::class.java)
+        return Intent(context, MVVMActivityView::class.java)
     }
 }
