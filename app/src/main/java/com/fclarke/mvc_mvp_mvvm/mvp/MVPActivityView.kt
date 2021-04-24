@@ -31,8 +31,8 @@ class MVPActivityView : AppCompatActivity() , Presenter.View{
         progress = findViewById(R.id.progress)
         adapter = ArrayAdapter<String>(this, R.layout.row_layout, R.id.listText, listValues)
 
-        list?.setAdapter(adapter)
-        list?.setOnItemClickListener(OnItemClickListener { parent, view, position, id ->
+        list?.adapter = adapter
+        list?.setOnItemClickListener({ parent, view, position, id ->
             Toast.makeText(
                 this@MVPActivityView,
                 "You clicked " + listValues[position],
@@ -58,8 +58,7 @@ class MVPActivityView : AppCompatActivity() , Presenter.View{
 
     override fun setValues(values: MutableList<String?>) {
         listValues.clear()
-        if (values != null)
-            listValues.addAll(values.toCollection(mutableListOf()))
+        listValues.addAll(values.toCollection(mutableListOf()))
         retryButton!!.visibility = View.GONE
         progress!!.visibility = View.GONE
         list!!.visibility = View.VISIBLE
@@ -81,7 +80,4 @@ class MVPActivityView : AppCompatActivity() , Presenter.View{
         retryButton!!.visibility = View.VISIBLE
     }
 
-    fun getIntent(context: Context?): Intent? {
-        return Intent(context, MVPActivityView::class.java)
-    }
 }

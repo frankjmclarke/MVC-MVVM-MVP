@@ -32,7 +32,7 @@ class MVCActivityView : AppCompatActivity() {
         adapter = ArrayAdapter<String>(this, R.layout.row_layout, R.id.listText, listValues)
 
         list?.setAdapter(adapter)
-        list?.setOnItemClickListener(OnItemClickListener { parent, view, position, id ->
+        list?.setOnItemClickListener({ parent, view, position, id ->
             Toast.makeText(
                 this@MVCActivityView,
                 "You clicked " + listValues[position],
@@ -58,8 +58,7 @@ class MVCActivityView : AppCompatActivity() {
 
     fun setValues(values: MutableList<String?>) {
         listValues.clear()
-        if (values != null)
-            listValues.addAll(values.toCollection(mutableListOf()))
+        listValues.addAll(values.toCollection(mutableListOf()))
         retryButton!!.visibility = View.GONE
         progress!!.visibility = View.GONE
         list!!.visibility = View.VISIBLE
@@ -81,7 +80,4 @@ class MVCActivityView : AppCompatActivity() {
         retryButton!!.visibility = View.VISIBLE
     }
 
-    fun getIntent(context: Context?): Intent? {
-        return Intent(context, MVCActivityView::class.java)
-    }
 }

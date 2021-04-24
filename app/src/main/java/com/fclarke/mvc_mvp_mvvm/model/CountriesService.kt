@@ -5,5 +5,5 @@ import retrofit2.http.GET
 
 interface CountriesService {
     @GET("all")
-    open fun getCountries(): Single<List<CountryInterface>>
+    fun getCountries(): Single<List<CountryInterface>>
 }

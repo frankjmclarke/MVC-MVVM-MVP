@@ -1,11 +1,8 @@
 package com.fclarke.mvc_mvp_mvvm.mvvm
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.*
-import android.widget.AdapterView.OnItemClickListener
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import com.fclarke.mvc_mvp_mvvm.R
@@ -33,14 +30,14 @@ class MVVMActivityView : AppCompatActivity() {
         progress = findViewById(R.id.progress)
         adapter = ArrayAdapter<String>(this, R.layout.row_layout, R.id.listText, listValues)
 
-        list?.setAdapter(adapter)
-        list?.setOnItemClickListener(OnItemClickListener { parent, view, position, id ->
+        list?.adapter = adapter
+        list?.setOnItemClickListener { _, _, position, _ ->
             Toast.makeText(
                 this@MVVMActivityView,
                 "You clicked " + listValues[position],
                 Toast.LENGTH_SHORT
             ).show()
-        })
+        }
 
         observeViewModel()
     }
@@ -73,10 +70,5 @@ class MVVMActivityView : AppCompatActivity() {
         list!!.visibility = View.GONE
         retryButton!!.visibility = View.GONE
         progress!!.visibility = View.VISIBLE
-    }
-
-
-    fun getIntent(context: Context?): Intent? {
-        return Intent(context, MVVMActivityView::class.java)
     }
 }
